@@ -1,0 +1,38 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: camel-drools-rest-app
+
+camel:
+  springboot:
+    name: CamelDroolsApplication
+  servlet:
+    mapping:
+      context-path: /api/*
+  rest:
+    component: servlet
+    binding-mode: json
+    json:
+      enable-features: ENABLE_FEATURES
+      disable-features: FAIL_ON_EMPTY_BEANS
+    data-format-property:
+      prettyPrint: true
+
+logging:
+  level:
+    com.example: DEBUG
+    org.apache.camel: INFO
+    org.drools: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
