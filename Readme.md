@@ -1,5 +1,4 @@
 
-```markdown
 # Camel-Drools-REST Integration
 
 ![Java](https://img.shields.io/badge/Java-11%2B-blue)
@@ -42,15 +41,7 @@ The application processes orders through a series of validation steps and busine
 
 ## Architecture Overview
 
-```mermaid
-graph TD
-    A[Client] -->|HTTP Request| B[Camel REST Endpoint]
-    B --> C[Validation]
-    C --> D[Drools Rules Engine]
-    D --> E[Response]
-    F[Scheduled Jobs] --> D
-    G[Async Queue] --> D
-```
+![https://github.com/Ganesh-73005/camel-springboot/blob/main/Editor%20_%20Mermaid%20Chart-2025-06-19-070916.png]
 
 ## Features
 
