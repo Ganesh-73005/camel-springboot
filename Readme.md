@@ -246,5 +246,4 @@ This README provides:
 5. Explanation of Camel concepts
 6. Practical examples for extension
 7. Troubleshooting guidance
-
-The markdown format makes it easy to maintain and renders beautifully on GitHub. You can further customize it with your project's specific details or additional sections as needed.
+```
