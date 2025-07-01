@@ -2,8 +2,11 @@ package com.example.routes;
 
 import com.example.model.Order;
 import com.example.service.DroolsService;
+
+import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,6 +14,9 @@ public class CamelRoutes extends RouteBuilder {
 
     @Autowired
     private DroolsService droolsService;
+
+    @Value("${fulfillment.service.url}")
+    private String fulfillmentServiceUrl;
 
     @Override
     public void configure() throws Exception {
@@ -53,7 +59,26 @@ public class CamelRoutes extends RouteBuilder {
             .log("Received order for processing: ${body}")
             .to("direct:validateOrder")
             .to("direct:applyRules")
+            .choice()
+                .when(simple("${body.approved} == true"))
+                    .log("Sending approved order to fulfillment: ${body.orderId}")
+                    .to("direct:sendToFulfillment")
+                .otherwise()
+                    .log("Order not approved, skipping fulfillment: ${body.orderId}")
             .log("Order processing completed: ${body}");
+
+        // Route to send to fulfillment service
+        from("direct:sendToFulfillment")
+            .routeId("sendToFulfillmentRoute")
+            .log("Sending order ${body.orderId} to fulfillment")
+            .removeHeaders("CamelHttp*") // Clear old headers
+            .setHeader(Exchange.HTTP_METHOD, constant("POST"))
+            .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
+            .marshal().json()
+            .toD("http://localhost:8081/api/fulfillment/orders?bridgeEndpoint=true&throwExceptionOnFailure=false")
+            .convertBodyTo(String.class) // Convert response to String
+            .log("Fulfillment response: ${body}")
+            .end();
 
         // Order validation route
         from("direct:validateOrder")
@@ -102,6 +127,7 @@ public class CamelRoutes extends RouteBuilder {
             .choice()
                 .when(simple("${body.approved} == true"))
                     .log("Order approved and ready for fulfillment: ${body.orderId}")
+                    .to("direct:sendToFulfillment")
                 .otherwise()
                     .log("Order requires manual review: ${body.orderId}");
     }
