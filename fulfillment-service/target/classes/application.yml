@@ -1,0 +1,41 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: fulfillment-service
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+
+camel:
+  springboot:
+    name: FulfillmentServiceApplication
+  servlet:
+    mapping:
+      context-path: /api/*
+  rest:
+    component: servlet
+    binding-mode: json
+    json:
+      enable-features: ENABLE_FEATURES
+      disable-features: FAIL_ON_EMPTY_BEANS
+    data-format-property:
+      prettyPrint: true
+
+logging:
+  level:
+    com.example.fulfillment: DEBUG
+    org.apache.camel: INFO
+    org.drools: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

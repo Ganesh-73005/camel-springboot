@@ -1,0 +1,4 @@
+com\example\fulfillment\routes\FulfillmentRoutes.class
+com\example\fulfillment\model\FulfillmentOrder.class
+com\example\fulfillment\service\FulfillmentRulesService.class
+com\example\fulfillment\FulfillmentServiceApplication.class
