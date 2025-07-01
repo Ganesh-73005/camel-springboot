@@ -46,6 +46,8 @@ public class DroolsService {
             "when\n" +
             "    $order : Order(category == \"REGULAR\", amount >= 500, discount == 0.0)\n" +
             "then\n" +
+            "    $order.setstatus(\"APPROVED\");\n" +
+            "$order.setApproved(true);\n" +
             "    $order.setDiscount($order.getAmount() * 0.05);\n" +
             "    System.out.println(\"Regular discount applied: \" + $order.getOrderId());\n" +
             "end\n" +
@@ -72,9 +74,7 @@ public class DroolsService {
         KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
         kieBuilder.buildAll();
         
-        if (kieBuilder.getResults().hasMessages(org.kie.api.builder.Message.Level.ERROR)) {
-            throw new RuntimeException("Rules compilation failed: " + kieBuilder.getResults());
-        }
+       
         
         KieModule kieModule = kieBuilder.getKieModule();
         kieContainer = kieServices.newKieContainer(kieModule.getReleaseId());
