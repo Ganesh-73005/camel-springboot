@@ -3,7 +3,14 @@ server:
 
 spring:
   application:
-    name: camel-drools-rest-app
+    name: order-processing-service
+  jackson:
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+
+fulfillment:
+  service:
+    url: http://localhost:8081
 
 camel:
   springboot:
@@ -17,6 +24,9 @@ camel:
     json:
       enable-features: ENABLE_FEATURES
       disable-features: FAIL_ON_EMPTY_BEANS
+    clientRequestValidation: true
+  http:
+    disableStreamCache: true
     data-format-property:
       prettyPrint: true
 
