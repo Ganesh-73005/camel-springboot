@@ -43,6 +43,7 @@ The application processes orders through a series of validation steps and busine
 
 ![arch](https://github.com/Ganesh-73005/camel-springboot/blob/main/Editor%20_%20Mermaid%20Chart-2025-06-19-070916.png)
 ![flow](https://github.com/Ganesh-73005/camel-springboot/blob/main/deepseek_mermaid_20250619_6347a2.svg)
+![full flow](https://github.com/Ganesh-73005/camel-springboot/blob/main/deepseek_mermaid_20250701_df233d.png)
 
 ## Features
 
