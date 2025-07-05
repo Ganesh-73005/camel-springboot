@@ -30,8 +30,6 @@ A distributed system demonstrating integration of Apache Camel with Drools acros
 
 ## System Overview
 
-![System Flow](https://github.com/Ganesh-73005/camel-springboot/blob/main/mmermaid_20250701_df233d.png)
-
 The system implements a complete order processing pipeline:
 
 1. **Order Service** (Port 8080):
